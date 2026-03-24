@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Technology TCA Exam Prep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="glass-header">
+      <div class="logo">
+        <span class="gradient-text">MediaTech</span> Prep
+      </div>
+      <div class="stats">
+        <span id="total-questions">100+</span> Questions Available
+      </div>
+    </header>
+
+    <main class="main-content">
+      <aside class="sidebar glass-panel">
+        <h3>Categories</h3>
+        <nav id="category-nav">
+          <button class="nav-btn active" data-category="mcq">Multiple Choice</button>
+          <button class="nav-btn" data-category="fillInTheBlank">Fill in the Blanks</button>
+          <button class="nav-btn" data-category="trueFalse">True / False</button>
+          <button class="nav-btn" data-category="matchFollowing">Match the Following</button>
+          <button class="nav-btn" data-category="longAnswer">Long Answer</button>
+        </nav>
+        <div class="progress-container">
+          <h4>Your Progress</h4>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <p id="progress-text">0 / 0 Completed</p>
+        </div>
+      </aside>
+
+      <section class="content-area">
+        <div class="header-section">
+          <h2 id="category-title" class="gradient-text">Multiple Choice Questions</h2>
+          <p id="category-desc">Test your knowledge with these objective questions.</p>
+        </div>
+        
+        <div id="questions-container" class="questions-container">
+          <!-- Questions will be dynamically injected here -->
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
