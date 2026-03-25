@@ -1,6 +1,6 @@
 /* Retrieve data from questions.js */
 const DATA = questionBank;
-let currentCategory = 'mcq';
+let currentCategory = 'practice';
 
 const navButtons = document.querySelectorAll('.nav-btn');
 const catTitle = document.getElementById('category-title');
@@ -10,11 +10,8 @@ const progressText = document.getElementById('progress-text');
 const progressFill = document.getElementById('progress-fill');
 
 const categoryDetails = {
-  mcq: { title: "Multiple Choice Questions", desc: "Select the correct option from the given choices." },
-  fillInTheBlank: { title: "Fill in the Blanks", desc: "Type the missing core concept into the input box." },
-  trueFalse: { title: "True / False Questions", desc: "Determine the validity of the technical statement." },
-  matchFollowing: { title: "Match the Following", desc: "Select the correct matching definition from the dropdowns." },
-  longAnswer: { title: "Long Answer Questions", desc: "Type your answer, then check it against the expected solution." }
+  practice: { title: "Practice Mode", desc: "A comprehensive mix of all theory questions to test your knowledge." },
+  tca: { title: "TCA Exam (Mixed Mode)", desc: "A comprehensive mix of TCA assessment questions." }
 };
 
 // Track progress globally
@@ -76,16 +73,18 @@ function loadCategory(catKey) {
     // Q text
     const qText = document.createElement('div');
     qText.className = 'q-text';
-    qText.textContent = item.q;
+    qText.innerHTML = item.q;
     card.appendChild(qText);
     
     // Input Logic Setup
     let userInputs = [];
     
-    if (catKey === 'mcq' || catKey === 'trueFalse') {
+    let itemType = item.type || catKey;
+    
+    if (itemType === 'mcq' || itemType === 'trueFalse') {
       const g = document.createElement('div');
       g.className = 'options-grid';
-      const optionsArray = catKey === 'mcq' ? item.options : ['True', 'False'];
+      const optionsArray = itemType === 'mcq' ? item.options : ['True', 'False'];
       
       optionsArray.forEach(opt => {
         const o = document.createElement('div');
@@ -105,16 +104,16 @@ function loadCategory(catKey) {
       });
       card.appendChild(g);
     } 
-    else if (catKey === 'fillInTheBlank' || catKey === 'longAnswer') {
-      const input = document.createElement(catKey === 'longAnswer' ? 'textarea' : 'input');
+    else if (itemType === 'fillInTheBlank' || itemType === 'longAnswer') {
+      const input = document.createElement(itemType === 'longAnswer' ? 'textarea' : 'input');
       input.className = 'input-answer';
-      if (catKey === 'fillInTheBlank') input.type = 'text';
-      if (catKey === 'longAnswer') input.rows = 4;
+      if (itemType === 'fillInTheBlank') input.type = 'text';
+      if (itemType === 'longAnswer') input.rows = 4;
       input.placeholder = "Type your answer here...";
       userInputs.push(input);
       card.insertBefore(input, null); // Append safely
     }
-    else if (catKey === 'matchFollowing') {
+    else if (itemType === 'matchFollowing') {
       const matchGrid = document.createElement('div');
       matchGrid.className = 'match-grid';
       
@@ -163,7 +162,7 @@ function loadCategory(catKey) {
     // Check Answer Execution
     btn.addEventListener('click', () => {
        // Validate Selection for MCQ/TF
-       if (catKey === 'mcq' || catKey === 'trueFalse') {
+       if (itemType === 'mcq' || itemType === 'trueFalse') {
           const selected = card.querySelector('.option.selected');
           if (!selected) {
              alert('Please select an option to check your answer!');
@@ -182,7 +181,7 @@ function loadCategory(catKey) {
        let feedbackSnippet = "";
 
        // Grading
-       if (catKey === 'mcq' || catKey === 'trueFalse') {
+       if (itemType === 'mcq' || itemType === 'trueFalse') {
           const opts = card.querySelectorAll('.option');
           const selected = card.querySelector('.option.selected');
           
@@ -198,7 +197,7 @@ function loadCategory(catKey) {
              });
           }
        } 
-       else if (catKey === 'fillInTheBlank') {
+       else if (itemType === 'fillInTheBlank') {
           const val = userInputs[0].value.trim().toLowerCase();
           if (item.answer.toLowerCase().includes(val) && val.length > 2) {
              isCorrect = true; userInputs[0].style.borderColor = 'var(--success-color)';
@@ -206,11 +205,11 @@ function loadCategory(catKey) {
              userInputs[0].style.borderColor = '#f85149';
           }
        }
-       else if (catKey === 'longAnswer') {
+       else if (itemType === 'longAnswer') {
           // Can't autograde complex text reliably, give neutral feedback
           isCorrect = "neutral";
        }
-       else if (catKey === 'matchFollowing') {
+       else if (itemType === 'matchFollowing') {
           let score = 0;
           item.pairs.forEach((p, i) => {
              const dropdown = userInputs[i];
@@ -238,7 +237,7 @@ function loadCategory(catKey) {
           feedbackSnippet = `<div class="feedback-banner neutral">Review Your Answer</div>`;
        }
 
-       if (catKey === 'matchFollowing') {
+       if (itemType === 'matchFollowing') {
           let solvedPairs = item.pairs.map(p => `• <b>${p.left}</b> corresponds strictly to <b>${p.right}</b>`).join("<br>");
           solBox.innerHTML = `
            ${feedbackSnippet}

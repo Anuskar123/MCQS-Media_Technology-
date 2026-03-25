@@ -326,6 +326,19 @@ nav {
   padding-top: 1rem;
 }
 
+.matrix-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: var(--accent-color);
+  margin-top: 1rem;
+  display: inline-block;
+  line-height: 1.4;
+  border: 1px solid var(--border-color);
+}
+
 /* Interactive Inputs */
 .input-answer {
   width: 100%;
