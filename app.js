@@ -11,7 +11,8 @@ const progressFill = document.getElementById('progress-fill');
 
 const categoryDetails = {
   practice: { title: "Practice Mode", desc: "A comprehensive mix of all theory questions to test your knowledge." },
-  tca: { title: "TCA Exam (Mixed Mode)", desc: "A comprehensive mix of TCA assessment questions." }
+  tca: { title: "TCA Exam (Mixed Mode)", desc: "A comprehensive mix of TCA assessment questions." },
+  tca_master: { title: "TCA Master Mode", desc: "Transformed TCA questions (MCQ ↔ Fill in the Blanks) for 100% exam readiness." }
 };
 
 // Track progress globally
