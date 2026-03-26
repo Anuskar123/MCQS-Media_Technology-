@@ -33,7 +33,7 @@ function init() {
     });
   });
   
-  loadCategory('mcq');
+  loadCategory('practice');
 }
 
 function updateProgress() {
